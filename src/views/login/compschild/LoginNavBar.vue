@@ -2,7 +2,7 @@
   <div class="">
     <van-nav-bar
       class="app-nav-bar"
-      title="注册/登录"
+      title="注册 / 登录"
       left-arrow
       @click-left="$router.back()"
     />
