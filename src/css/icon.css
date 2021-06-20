@@ -1,6 +1,3 @@
-/* 
-  全局样式文件
-*/
 @font-face {
   font-family: "toutiao";
   /* Project id 2621491 */
@@ -72,8 +69,4 @@
 }
 .toutiao-yuedu:before {
   content: "\e614";
-}
-* {
-  padding: 0;
-  margin: 0;
 }

@@ -13,6 +13,17 @@
       <van-cell title="单元格" value="内容" label="描述信息" />
     </van-cell-group>
     <div class="hhh">hhh</div>
+    <i class="toutiao toutiao-shanchu"></i>
+    <i class="toutiao toutiao-shoucang"></i>
+    <div>
+      <van-icon name="chat-o" />
+      <van-icon name="phone-o" dot />
+      <van-icon name="phone-o" badge="99+" />
+    </div>
+    <div>
+      <van-button icon="plus" type="primary" />
+      <van-button icon-prefix="toutiao" icon="shanchu"></van-button>
+    </div>
   </div>
 </template>
 
