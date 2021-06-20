@@ -1,11 +1,23 @@
 <template>
-  <div class="login-container">登录页面</div>
+  <div class="login-container">
+    <!-- navbar 导航栏 -->
+    <login-nav-bar></login-nav-bar>
+
+    <!-- 登录表单 -->
+    <login-form></login-form>
+  </div>
 </template>
 
 <script>
+import LoginNavBar from './compschild/LoginNavBar'
+import LoginForm from './compschild/LoginForm'
+
 export default {
   name: 'Login',
-  components: {},
+  components: {
+    LoginNavBar,
+    LoginForm,
+  },
   props: {},
   data() {
     return {}
