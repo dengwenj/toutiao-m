@@ -4,10 +4,12 @@ module.exports = {
     resolve: {
       alias: {
         'assets': '@/assets',
-        'common': '@/common',
         'components': '@/components',
-        'network': '@/network',
+        'router': '@/router',
         'views': '@/views',
+        'store': '@/store',
+        'api': '@/api',
+        'utils': '@/utils',
       }
     }
   }
