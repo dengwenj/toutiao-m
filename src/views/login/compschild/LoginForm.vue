@@ -9,11 +9,13 @@
       3 使用 Field 的 rules 属性定义校验规则
 
       @failed="onFailed" 提交表单且验证不通过后触发
+      validate-first  是否在某一项校验不通过时停止校验
      -->
     <van-form
       :show-error-message="false"
       :show-error="false"
       validate-first
+      ref="login-form"
       @submit="onLogin"
       @failed="onFailed"
     >
@@ -22,7 +24,7 @@
         icon-prefix="toutiao"
         left-icon="shouji"
         placeholder="请输入手机号"
-        name="手机号"
+        name="mobile"
         :rules="formRules.mobile"
       />
       <van-field
@@ -31,11 +33,29 @@
         icon-prefix="toutiao"
         left-icon="yanzhengma"
         placeholder="请输入验证码"
-        name="验证码"
+        name="code"
         :rules="formRules.code"
       >
+        <!--
+           .prevent 是 vue 中的修饰符阻止默认行为 
+           @finish 倒计时结束时触发
+        -->
         <template #button>
-          <van-button class="yanzhengma" size="small" round
+          <van-count-down
+            v-if="isCountDownShow"
+            class="yanzhengma"
+            :time="1000 * 60"
+            format="ss s"
+            @finish="isCountDownShow = false"
+          />
+          <van-button
+            v-else
+            class="yanzhengma"
+            size="small"
+            round
+            :loading="isSendSmsLoading"
+            loading-type="spinner"
+            @click.prevent="onSendSms"
             >发送验证码</van-button
           >
         </template>
@@ -49,7 +69,7 @@
 
 <script>
 // 网络请求
-import { login } from 'api/user'
+import { login, sendsms } from 'api/user'
 
 export default {
   name: 'LoginForm',
@@ -71,6 +91,8 @@ export default {
           { pattern: /^\d{6}$/, message: '验证码格式错误' },
         ],
       },
+      isCountDownShow: false, // 显示隐藏倒计时
+      isSendSmsLoading: false, // 发送验证码按钮的 loading 状态
     }
   },
   computed: {},
@@ -110,6 +132,50 @@ export default {
         })
       }
     },
+
+    // 验证码
+    async onSendSms() {
+      // 展示按钮的 loading 状态， 防止网络慢用户多次点击触发发送行为
+      this.isSendSmsLoading = true
+
+      // 校验手机号码
+      try {
+        // 手机号输入正确
+        // validate 验证表单，支持传入 name 来验证单个或部分表单项 是 form 表单方法通过 ref 来获取 form 表单
+        await this.$refs['login-form'].validate('mobile') // 这里错误的话进入 catch 里面 返回的是 Promise
+
+        // 验证通过 获取验证码
+        await sendsms(this.user.mobile)
+
+        // 短信发出去了，隐藏发送按钮，显示倒计时
+        this.isCountDownShow = true
+        // 倒计时结束 -> 隐藏倒计时，显示发送按钮（监听倒计时的 finish 事件处理）
+      } catch (error) {
+        console.dir(error)
+        // try 里面任何代码的错误都会进入 catch
+        // 不同的错误需要有不同的提示，那就要判断了
+        let message = ''
+        if (error && error.response && error.response.status === 429) {
+          // 发送短信失败的提示
+          message = '验证码发送频繁，请一分钟后发送'
+        } else if (error && error.name === 'mobile') {
+          // 表单验证失败的错误提示
+          message = error.message
+        } else {
+          // 未知错误
+          message = '发送失败，请稍后重试'
+        }
+
+        // 提示用户信息
+        this.$toast({
+          message,
+          position: top,
+        })
+      }
+
+      // 无论验证码成功还是失败，最后都要关闭发送按钮的 loading 状态
+      this.isSendSmsLoading = false
+    },
   },
 }
 </script>
@@ -117,8 +183,11 @@ export default {
 <style scoped lang="less">
 .login-form {
   .yanzhengma {
+    padding: 0 10px;
+    border-radius: 10px;
     height: 23px;
     background: #ededed;
+    color: #aaa;
     .van-button__text {
       font-size: 11px;
       color: #666;

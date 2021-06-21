@@ -12,3 +12,11 @@ export const login = (data) => {
     data
   })
 }
+
+// 短信验证码
+export const sendsms = (mobile) => {
+  return request({
+    url: `/app/v1_0/sms/codes/${mobile}`,
+    method: 'GET'
+  })
+}
