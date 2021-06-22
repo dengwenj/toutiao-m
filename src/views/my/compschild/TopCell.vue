@@ -1,6 +1,7 @@
 <template>
   <div class="topcell">
-    <van-cell-group class="my-info">
+    <!-- 登录 -->
+    <van-cell-group v-if="userToken" class="my-info">
       <van-cell class="banner-info" title="单元格" center :border="false">
         <van-image
           class="avatar"
@@ -39,14 +40,33 @@
         </van-grid-item>
       </van-grid>
     </van-cell-group>
+
+    <!-- 未登录 -->
+    <div v-else class="not-login">
+      <div>
+        <img
+          class="mobileImg"
+          src="./mobileImg.png"
+          @click="$router.push('/login')"
+        />
+      </div>
+      <div class="text" @click="$router.push('/login')">登录 / 注册</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'MyTop',
   components: {},
-  props: {},
+  props: {
+    userToken: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+  },
   data() {
     return {}
   },
@@ -105,6 +125,23 @@ export default {
     }
     /deep/ .van-grid-item__content {
       background: unset;
+    }
+  }
+  .not-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    background: url(./banner.png) no-repeat;
+    background-size: cover;
+    .mobileImg {
+      height: 66px;
+      width: 66px;
+    }
+    .text {
+      color: #fff;
+      font-size: 14px;
     }
   }
 }

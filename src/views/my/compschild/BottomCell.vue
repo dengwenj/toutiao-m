@@ -2,15 +2,22 @@
   <div class="">
     <van-cell class="cell" title="消息通知" is-link url="/" />
     <van-cell class="cell" title="小邓同学" is-link to="/qa" />
-    <van-cell class="drop-out" title="退出登录" />
+    <van-cell v-if="userToken" class="drop-out" title="退出登录" />
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'MyBottom',
   components: {},
-  props: {},
+  props: {
+    userToken: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+  },
   data() {
     return {}
   },

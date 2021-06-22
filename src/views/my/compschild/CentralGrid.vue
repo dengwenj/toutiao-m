@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: '',
+  name: 'MyCentral',
   components: {},
   props: {},
   data() {
