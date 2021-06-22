@@ -2,39 +2,39 @@
   <div class="topcell">
     <!-- 登录 -->
     <van-cell-group v-if="userToken" class="my-info">
-      <van-cell class="banner-info" title="单元格" center :border="false">
+      <van-cell class="banner-info" center :border="false">
         <van-image
           class="avatar"
           slot="icon"
           round
           fit="cover"
-          src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          :src="currentUser.photo"
         />
-        <div class="name" slot="title">dengwenjie</div>
+        <div class="name" slot="title">{{ currentUser.name }}</div>
         <van-button class="update-btn" size="small" round>编辑资料</van-button>
       </van-cell>
       <van-grid class="data-info" :border="false">
         <van-grid-item class="data-info-item">
           <div class="data-warp" slot="text">
-            <div class="count">112</div>
+            <div class="count">{{ currentUser.art_count }}</div>
             <div class="text">头条</div>
           </div>
         </van-grid-item>
         <van-grid-item class="data-info-item">
           <div class="data-warp" slot="text">
-            <div class="count">112</div>
+            <div class="count">{{ currentUser.follow_count }}</div>
             <div class="text">关注</div>
           </div>
         </van-grid-item>
         <van-grid-item class="data-info-item">
           <div class="data-warp" slot="text">
-            <div class="count">112</div>
+            <div class="count">{{ currentUser.fans_count }}</div>
             <div class="text">粉丝</div>
           </div>
         </van-grid-item>
         <van-grid-item class="data-info-item">
           <div class="data-warp" slot="text">
-            <div class="count">112</div>
+            <div class="count">{{ currentUser.like_count }}</div>
             <div class="text">获赞</div>
           </div>
         </van-grid-item>
@@ -60,7 +60,15 @@ export default {
   name: 'MyTop',
   components: {},
   props: {
+    // 登录过后才有的 token
     userToken: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+    // 用户自己的信息
+    currentUser: {
       type: Object,
       default() {
         return {}
