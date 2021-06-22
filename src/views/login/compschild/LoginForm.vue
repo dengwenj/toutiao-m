@@ -156,7 +156,7 @@ export default {
         this.isCountDownShow = true
         // 倒计时结束 -> 隐藏倒计时，显示发送按钮（监听倒计时的 finish 事件处理）
       } catch (error) {
-        console.dir(error)
+        // console.dir(error)
         // try 里面任何代码的错误都会进入 catch
         // 不同的错误需要有不同的提示，那就要判断了
         let message = ''
