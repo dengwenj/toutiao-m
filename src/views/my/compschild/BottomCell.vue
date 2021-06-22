@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <van-cell class="cell" title="消息通知" is-link url="/" />
+    <van-cell class="cell" title="消息通知" is-link to="/" />
     <van-cell class="cell" title="小邓同学" is-link to="/qa" />
     <van-cell
       v-if="userToken"
