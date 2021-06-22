@@ -1,5 +1,6 @@
 <template>
-  <div class="topcell">
+  <!-- currentUser 这个是异步请求过来的 请求过来了就显示下面的代码 没请求过来就不显示 -->
+  <div class="topcell" v-if="currentUser">
     <!-- 登录 -->
     <van-cell-group v-if="userToken" class="my-info">
       <van-cell class="banner-info" center :border="false">

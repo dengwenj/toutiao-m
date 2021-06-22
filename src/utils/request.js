@@ -14,7 +14,7 @@ const request = axios.create({
 })
 
 // 添加请求拦截器
-axios.interceptors.request.use(function(config) {
+request.interceptors.request.use(function(config) {
   const { user } = store.state
 
   // 如果用户已登录，统一给接口设置 token 信息
@@ -27,7 +27,7 @@ axios.interceptors.request.use(function(config) {
 }, function(error) {
 
   return Promise.reject(error);
-});
+})
 
 // 导出
 export default request
