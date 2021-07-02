@@ -6,6 +6,11 @@
         <!-- 文章列表  -->
         <article-list :channel="item"></article-list>
       </van-tab>
+      <!-- 汉堡按钮定位把列表最后的位置给挡住了，解决办法就是在这里添加一个占位元素 -->
+      <div slot="nav-right" class="zuihou"></div>
+      <div slot="nav-right" class="popup" @click="isPopup">
+        <van-icon name="wap-nav" />
+      </div>
     </van-tabs>
   </div>
 </template>
@@ -36,7 +41,11 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    isPopup() {
+      this.$emit('isPopup')
+    },
+  },
 }
 </script>
 
@@ -48,5 +57,29 @@ export default {
 /deep/ .van-tabs__line {
   width: 20px;
   background: #3296fa;
+}
+.zuihou {
+  width: 33px;
+  flex-shrink: 0;
+}
+.popup {
+  position: fixed;
+  /* top: 0; */
+  right: 0;
+  height: 43px;
+  width: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  opacity: 0.9;
+  font-size: 26px;
+  // &::before {
+  //   margin-right: 5px;
+  //   content: '';
+  //   width: 1px;
+  //   height: 43px;
+  //   background: linear-gradient(#e2e2e2, #cacaca, #e2e2e2);
+  // }
 }
 </style>
