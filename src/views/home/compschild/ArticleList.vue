@@ -13,26 +13,34 @@
       非加载中，loading 为 false，此时会根据列表滚动位置判断是否触发 load 事件（列表内容不足一屏幕时，会直接触发）
       加载中，loading 为 true，表示正在发送异步请求，此时不会触发 load 事件
  
-   finished 属性：控制加载结束的状态 
+    finished 属性：控制加载结束的状态 
      在每次请求完毕后，需要手动将 loading 设置为 false，表示本次加载结束
      所有数据加载结束，finished 为 true，此时不会触发 load 事件
      -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
+    <van-pull-refresh
+      v-model="isRefreshLoading"
+      :success-text="refreshSuccessText"
+      :success-duration="1200"
+      @refresh="onRefresh"
     >
-      <van-cell
-        v-for="(item, index) in list"
-        :key="index"
-        :title="item.title"
-      />
-    </van-list>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <van-cell
+          v-for="(item, index) in list"
+          :key="index"
+          :title="item.title"
+        />
+      </van-list>
+    </van-pull-refresh>
   </div>
 </template>
 
 <script>
+// 网络请求
 import { getArticles } from 'api/article'
 
 export default {
@@ -52,6 +60,8 @@ export default {
       loading: false, // 控制加载中的 loading 状态
       finished: false, // 控制加载结束的状态，当加载结束，不再触发加载更多
       timestamp: null, // 获取下一页数据的事件戳
+      isRefreshLoading: false, // 下拉刷新
+      refreshSuccessText: '', // 刷新成功提示
     }
   },
   computed: {},
@@ -84,6 +94,28 @@ export default {
         // 没有数据了，把加载状态设置结束，不再触发加载更多
         this.finished = true
       }
+    },
+
+    // 下拉刷新时会触发 refresh 事件
+    async onRefresh() {
+      // 下拉刷新，组件自己就会展示 loading 状态
+      // 1 请求获取数据
+      const { data } = await getArticles({
+        channel_id: this.channel.id,
+        // 下拉刷新，每次获取最新的时间戳
+        timestamp: Date.now(),
+        with_top: 1,
+      })
+
+      const results = data.data.results
+
+      // 2 把数据放到数据列表中 (往顶部追加)
+      this.list.unshift(...results)
+
+      // 3 关闭刷新的状态 loading
+      this.isRefreshLoading = false
+
+      this.refreshSuccessText = `更新了${results.length}条数据`
     },
   },
 }
