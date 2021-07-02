@@ -40,4 +40,13 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+/deep/ .van-tab {
+  border-right: 1px solid #edeff3;
+  // border-bottom: 1px solid #edeff3;
+}
+/deep/ .van-tabs__line {
+  width: 20px;
+  background: #3296fa;
+}
+</style>
