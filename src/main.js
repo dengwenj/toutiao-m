@@ -14,6 +14,8 @@ import 'amfe-flexible'
 // 加载全局样式（最好放在最后，方便去覆盖第三方样式）
 import './styles/index.less'
 
+import 'utils/dayjs'
+
 // 全局注册 Vant 中的组件 安装插件
 Vue.use(Vant)
 
