@@ -2,15 +2,24 @@
   <div class="channel-edit">
     <van-cell class="cell" center :border="false">
       <div slot="title" class="channel-title">我的频道</div>
-      <van-button type="warning" plain round size="mini">编辑</van-button>
+      <van-button
+        type="warning"
+        plain
+        round
+        size="mini"
+        @click="isEdit = !isEdit"
+        >{{ isEdit ? '完成' : '编辑' }}</van-button
+      >
     </van-cell>
     <van-grid :gutter="10">
       <!-- 这里的频道列表和首页的 HomeTab 的频道列表是一样的 -->
       <van-grid-item
+        :icon="isEdit && index !== 0 ? 'clear' : ''"
         class="grid-item"
         v-for="(channels, index) in userChannels"
         :key="index"
         :text="channels.name"
+        @click="onUserChannelClick(index)"
       />
     </van-grid>
     <van-cell class="cell cell-bottom" center :border="false">
@@ -46,6 +55,7 @@ export default {
     return {
       allChannels: [], // 所有的频道列表
       userChannels: [], // 我的频道
+      isEdit: false, // 控制编辑的显示状态
     }
   },
   computed: {
@@ -105,6 +115,25 @@ export default {
     onAdd(recommend) {
       this.userChannels.push(recommend)
     },
+
+    onUserChannelClick(index) {
+      if (this.isEdit && index !== 0) {
+        // 编辑状态，删除频道  推荐频道不能删
+        this.deleteChannel(index)
+      } else {
+        // 非编辑状态，切换频道
+        this.switchChannel(index)
+      }
+    },
+
+    deleteChannel(index) {
+      // 数组的这个方法可以删除数组里面的元素
+      this.userChannels.splice(index, 1)
+    },
+
+    switchChannel(index) {
+      console.log('切换频道')
+    },
   },
 }
 </script>
@@ -134,6 +163,7 @@ export default {
       background-color: #f4f5f6;
       border-radius: 8px;
       .van-grid-item__text {
+        margin-top: 0;
         font-size: 14px;
         color: #222;
       }
@@ -141,6 +171,13 @@ export default {
     /deep/ .van-hairline {
       &::after {
         border: none;
+      }
+      .van-grid-item__icon {
+        position: absolute;
+        top: -7px;
+        right: -7px;
+        font-size: 20px;
+        color: #ddd;
       }
     }
   }
