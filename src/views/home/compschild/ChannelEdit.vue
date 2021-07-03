@@ -1,12 +1,39 @@
 <template>
-  <div class="channel-edit">频道编辑</div>
+  <div class="channel-edit">
+    <van-cell class="cell" center :border="false">
+      <div slot="title" class="channel-title">我的频道</div>
+      <van-button type="warning" plain round size="mini">编辑</van-button>
+    </van-cell>
+    <van-grid :gutter="10">
+      <!-- 这里的频道列表和首页的 HomeTab 的频道列表是一样的 -->
+      <van-grid-item
+        class="grid-item"
+        v-for="(channels, index) in channelsEdit"
+        :key="index"
+        :text="channels.name"
+      />
+    </van-grid>
+    <van-cell class="cell cell-bottom" center :border="false">
+      <div slot="title" class="channel-title">频道推荐</div>
+    </van-cell>
+    <van-grid :gutter="10">
+      <van-grid-item v-for="value in 80" :key="value" text="文字" />
+    </van-grid>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'ChannelEdit',
   components: {},
-  props: {},
+  props: {
+    channelsEdit: {
+      type: Array,
+      default() {
+        return []
+      },
+    },
+  },
   data() {
     return {}
   },
@@ -18,4 +45,44 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.channel-edit {
+  position: fixed;
+  top: 54px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  .cell {
+    margin-bottom: 20px;
+    .channel-title {
+      font-size: 16px;
+      color: #333;
+    }
+    .van-button {
+      height: 23px;
+      padding: 0 12px;
+    }
+  }
+  .van-grid-item {
+    height: 43px;
+    /deep/ .van-grid-item__content {
+      background-color: #f4f5f6;
+      border-radius: 8px;
+      .van-grid-item__text {
+        font-size: 14px;
+        color: #222;
+      }
+    }
+    /deep/ .van-hairline {
+      &::after {
+        border: none;
+      }
+    }
+  }
+
+  .cell-bottom {
+    margin-top: 33px;
+  }
+}
+</style>

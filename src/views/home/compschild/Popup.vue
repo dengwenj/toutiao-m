@@ -3,24 +3,28 @@
   <van-popup
     v-model="isShow"
     closeable
+    close-icon-position="top-left"
     position="bottom"
     :style="{ height: '100%' }"
     get-container="body"
     @click="popup"
   >
+    <!-- 自己使用插槽首页哪里使用频道编辑组件 -->
+    <slot></slot>
+
     <!-- 频道编辑 -->
-    <channel-edit></channel-edit>
+    <!-- <channel-edit></channel-edit> -->
     <!-- !频道编辑 -->
   </van-popup>
 </template>
 
 <script>
-import ChannelEdit from './ChannelEdit'
+// import ChannelEdit from './ChannelEdit'
 
 export default {
   name: 'Popup',
   components: {
-    ChannelEdit,
+    // ChannelEdit,
   },
   props: {
     isChannelEditShow: {
@@ -49,4 +53,12 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.van-popup {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+/deep/ .van-icon {
+  color: #222;
+}
+</style>

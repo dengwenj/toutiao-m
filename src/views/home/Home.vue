@@ -7,7 +7,11 @@
     <home-tab :channels="channels" @isPopup="isPopup"></home-tab>
 
     <!-- 弹出层 显示频道列表 -->
-    <popup :isChannelEditShow="isChannelEditShow" @popup="popup"></popup>
+    <popup :isChannelEditShow="isChannelEditShow" @popup="popup">
+      <!-- 频道编辑 使用的插槽-->
+      <channel-edit :channelsEdit="channels"></channel-edit>
+      <!-- !频道编辑 -->
+    </popup>
   </div>
 </template>
 
@@ -15,6 +19,7 @@
 import HomeNavBar from './compschild/HomeNavBar'
 import HomeTab from './compschild/HomeTab'
 import Popup from './compschild/Popup'
+import ChannelEdit from './compschild/ChannelEdit'
 
 // 网络请求
 import { getUserChannels } from 'api/user'
@@ -25,6 +30,7 @@ export default {
     HomeNavBar,
     HomeTab,
     Popup,
+    ChannelEdit,
   },
   props: {},
   data() {
