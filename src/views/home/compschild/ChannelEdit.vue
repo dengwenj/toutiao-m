@@ -133,6 +133,12 @@ export default {
 
     switchChannel(index) {
       console.log('切换频道')
+
+      // 关闭弹出层
+      this.$emit('close')
+
+      // 切换到的频道 用的事件总线
+      this.$bus.$emit('updateActive', index)
     },
   },
 }

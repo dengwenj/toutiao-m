@@ -17,6 +17,9 @@ import './styles/index.less'
 // 处理相对时间
 import 'utils/dayjs'
 
+// 事件总线
+Vue.prototype.$bus = new Vue()
+
 // 全局注册 Vant 中的组件 安装插件
 Vue.use(Vant)
 

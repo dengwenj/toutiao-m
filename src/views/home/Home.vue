@@ -9,7 +9,10 @@
     <!-- 弹出层 显示频道列表 -->
     <popup :isChannelEditShow="isChannelEditShow" @popup="popup">
       <!-- 频道编辑 使用的插槽-->
-      <channel-edit :channelsEdit="channels"></channel-edit>
+      <channel-edit
+        :channelsEdit="channels"
+        @close="isChannelEditShow = false"
+      ></channel-edit>
       <!-- !频道编辑 -->
     </popup>
   </div>

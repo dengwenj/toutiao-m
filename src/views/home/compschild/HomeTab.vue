@@ -39,7 +39,12 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    // 用的事件总线  传递过来的索引号 index 这样就可以切换到指定的频道了
+    this.$bus.$on('updateActive', (index) => {
+      this.active = index
+    })
+  },
   mounted() {},
   methods: {
     isPopup() {
