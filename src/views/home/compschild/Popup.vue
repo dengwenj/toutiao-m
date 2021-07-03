@@ -7,13 +7,21 @@
     :style="{ height: '100%' }"
     get-container="body"
     @click="popup"
-  />
+  >
+    <!-- 频道编辑 -->
+    <channel-edit></channel-edit>
+    <!-- !频道编辑 -->
+  </van-popup>
 </template>
 
 <script>
+import ChannelEdit from './ChannelEdit'
+
 export default {
   name: 'Popup',
-  components: {},
+  components: {
+    ChannelEdit,
+  },
   props: {
     isChannelEditShow: {
       type: Boolean,
