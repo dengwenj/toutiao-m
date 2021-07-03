@@ -23,6 +23,9 @@
 </template>
 
 <script>
+// 网络请求
+import { getAllChannels } from 'api/channels'
+
 export default {
   name: 'ChannelEdit',
   components: {},
@@ -35,13 +38,24 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      allChannels: [], // 所有的频道列表
+    }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    // 发送请求
+    this._getAllChannels()
+  },
   mounted() {},
-  methods: {},
+  methods: {
+    // 发送请求
+    async _getAllChannels() {
+      const { data } = await getAllChannels()
+      this.allChannels = data.data.channels
+    },
+  },
 }
 </script>
 
