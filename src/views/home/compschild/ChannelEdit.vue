@@ -20,7 +20,7 @@
         v-for="(channels, index) in userChannels"
         :key="index"
         :text="channels.name"
-        @click="onUserChannelClick(index)"
+        @click="onUserChannelClick(channels, index)"
       />
     </van-grid>
     <van-cell class="cell cell-bottom" center :border="false">
@@ -39,7 +39,15 @@
 
 <script>
 // 网络请求
-import { getAllChannels } from 'api/channels'
+import {
+  getAllChannels,
+  addUserChannels,
+  deleteUserChannels,
+} from 'api/channels'
+
+import { mapState } from 'vuex'
+
+import { setItem } from 'utils/storage'
 
 export default {
   name: 'ChannelEdit',
@@ -65,6 +73,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     // 计算属性会观测内部依赖数据的变化而重新求值
     // 思路：所有频道列表 - 我的频道 = 推荐的频道
     recommendChannels() {
@@ -123,28 +132,50 @@ export default {
     },
 
     // 点击推荐的频道添加到我的频道
-    onAdd(recommend) {
+    async onAdd(recommend) {
       this.userChannels.push(recommend)
+
+      // 数据持久化
+      if (this.user) {
+        // 登陆了，存储到线上
+        await addUserChannels({
+          channels: [{ id: recommend.id, seq: this.userChannels.length }],
+        })
+      } else {
+        // 没有登录，存储到本地
+        setItem('user-channels', this.userChannels)
+      }
     },
 
-    onUserChannelClick(index) {
+    onUserChannelClick(channels, index) {
       if (this.isEdit && index !== 0) {
         // 编辑状态，删除频道  推荐频道不能删
-        this.deleteChannel(index)
+        this.deleteChannel(channels, index)
       } else {
         // 非编辑状态，切换频道
         this.switchChannel(index)
       }
     },
 
-    deleteChannel(index) {
+    // 删除频道
+    async deleteChannel(channels, index) {
       // if (index <= this.active) {
       //   this.$bus.$emit('updateActive', this.active - 1)
       // }
       // 数组的这个方法可以删除数组里面的元素
       this.userChannels.splice(index, 1)
+
+      // 数据持久化
+      if (this.user) {
+        // 登录了，存储到线上
+        await deleteUserChannels(channels.id)
+      } else {
+        // 没有登录，存储到本地
+        setItem('user-channels', this.userChannels)
+      }
     },
 
+    // 切换频道
     switchChannel(index) {
       // 关闭弹出层
       this.$emit('close')
