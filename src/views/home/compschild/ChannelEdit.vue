@@ -14,8 +14,9 @@
     <van-grid :gutter="10">
       <!-- 这里的频道列表和首页的 HomeTab 的频道列表是一样的 -->
       <van-grid-item
-        :icon="isEdit && index !== 0 ? 'clear' : ''"
         class="grid-item"
+        :class="{ active: index === gaoLiangShow }"
+        :icon="isEdit && index !== 0 ? 'clear' : ''"
         v-for="(channels, index) in userChannels"
         :key="index"
         :text="channels.name"
@@ -50,12 +51,17 @@ export default {
         return []
       },
     },
+    active: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
       allChannels: [], // 所有的频道列表
       userChannels: [], // 我的频道
       isEdit: false, // 控制编辑的显示状态
+      gaoLiangShow: 0, // 显示高亮频道
     }
   },
   computed: {
@@ -102,6 +108,11 @@ export default {
   created() {
     // 发送请求
     this._getAllChannels()
+
+    // 事件总线
+    this.$bus.$on('gaoLiangShow', (active) => {
+      this.gaoLiangShow = active
+    })
   },
   mounted() {},
   methods: {
@@ -127,13 +138,14 @@ export default {
     },
 
     deleteChannel(index) {
+      // if (index <= this.active) {
+      //   this.$bus.$emit('updateActive', this.active - 1)
+      // }
       // 数组的这个方法可以删除数组里面的元素
       this.userChannels.splice(index, 1)
     },
 
     switchChannel(index) {
-      console.log('切换频道')
-
       // 关闭弹出层
       this.$emit('close')
 
@@ -186,10 +198,15 @@ export default {
         color: #ddd;
       }
     }
-  }
 
-  .cell-bottom {
-    margin-top: 33px;
+    .cell-bottom {
+      margin-top: 33px;
+    }
+  }
+  .active {
+    /deep/ .van-grid-item__text {
+      color: #f78453 !important;
+    }
   }
 }
 </style>

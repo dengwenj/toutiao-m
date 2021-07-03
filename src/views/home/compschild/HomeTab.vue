@@ -49,6 +49,8 @@ export default {
   methods: {
     isPopup() {
       this.$emit('isPopup')
+      // 事件总线
+      this.$bus.$emit('gaoLiangShow', this.active)
     },
   },
 }
