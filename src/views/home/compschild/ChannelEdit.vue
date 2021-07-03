@@ -17,7 +17,11 @@
       <div slot="title" class="channel-title">频道推荐</div>
     </van-cell>
     <van-grid :gutter="10">
-      <van-grid-item v-for="value in 80" :key="value" text="文字" />
+      <van-grid-item
+        v-for="(recommend, index) in recommendChannels"
+        :key="index"
+        :text="recommend.name"
+      />
     </van-grid>
   </div>
 </template>
@@ -42,7 +46,37 @@ export default {
       allChannels: [], // 所有的频道列表
     }
   },
-  computed: {},
+  computed: {
+    // 思路：所有频道列表 - 我的频道 = 推荐的频道
+    recommendChannels() {
+      // filter 方法：过滤数据，根据方法返回的布尔值 true 来收集数据
+      // filter 方法查找满足条件的所有元素
+      return this.allChannels.filter((channel) => {
+        // 判断 channel 是否属于用户频道
+        // find 方法查找满足条件的单个元素
+        return !this.channelsEdit.find((channelsEdit) => {
+          // 找到满足该条件的元素
+          return channelsEdit.id === channel.id
+        })
+      })
+    },
+
+    //   用的 for 循环
+    //   let arr = []
+    //   for (let i = 0; i < this.allChannels.length; i++) {
+    //     let flag = false
+    //     for (let j = 0; j < this.channelsEdit.length; j++) {
+    //       if (this.allChannels[i].id === this.channelsEdit[j].id) {
+    //         flag = true
+    //       }
+    //     }
+    //     if (!flag) {
+    //       arr.push(this.allChannels[i])
+    //     }
+    //   }
+    //   return arr
+    // },
+  },
   watch: {},
   created() {
     // 发送请求
