@@ -8,7 +8,7 @@
       <!-- 这里的频道列表和首页的 HomeTab 的频道列表是一样的 -->
       <van-grid-item
         class="grid-item"
-        v-for="(channels, index) in channelsEdit"
+        v-for="(channels, index) in userChannels"
         :key="index"
         :text="channels.name"
       />
@@ -21,6 +21,7 @@
         v-for="(recommend, index) in recommendChannels"
         :key="index"
         :text="recommend.name"
+        @click="onAdd(recommend)"
       />
     </van-grid>
   </div>
@@ -44,9 +45,11 @@ export default {
   data() {
     return {
       allChannels: [], // 所有的频道列表
+      userChannels: [], // 我的频道
     }
   },
   computed: {
+    // 计算属性会观测内部依赖数据的变化而重新求值
     // 思路：所有频道列表 - 我的频道 = 推荐的频道
     recommendChannels() {
       // filter 方法：过滤数据，根据方法返回的布尔值 true 来收集数据
@@ -54,9 +57,9 @@ export default {
       return this.allChannels.filter((channel) => {
         // 判断 channel 是否属于用户频道
         // find 方法查找满足条件的单个元素
-        return !this.channelsEdit.find((channelsEdit) => {
+        return !this.userChannels.find((userChannels) => {
           // 找到满足该条件的元素
-          return channelsEdit.id === channel.id
+          return userChannels.id === channel.id
         })
       })
     },
@@ -77,7 +80,15 @@ export default {
     //   return arr
     // },
   },
-  watch: {},
+  watch: {
+    // 复杂数据类型要这样写  不能像简单数据类型那样写
+    channelsEdit: {
+      handler(value) {
+        this.userChannels = value
+      },
+      immediate: true,
+    },
+  },
   created() {
     // 发送请求
     this._getAllChannels()
@@ -88,6 +99,11 @@ export default {
     async _getAllChannels() {
       const { data } = await getAllChannels()
       this.allChannels = data.data.channels
+    },
+
+    // 点击推荐的频道添加到我的频道
+    onAdd(recommend) {
+      this.userChannels.push(recommend)
     },
   },
 }
