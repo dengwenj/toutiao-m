@@ -1,7 +1,12 @@
 <template>
   <div class="home-nav-bar">
     <van-nav-bar class="app-nav-bar">
-      <van-button class="sreach-btn" icon="search" round slot="title"
+      <van-button
+        class="sreach-btn"
+        icon="search"
+        round
+        slot="title"
+        to="/search"
         >搜索</van-button
       >
     </van-nav-bar>
@@ -20,7 +25,12 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    // 这里也可以用点击事件让他跳转 但是 vant 中 button 有个 to 可以直接跳转
+    // search() {
+    //   this.$router.push('/search')
+    // },
+  },
 }
 </script>
 
