@@ -9,7 +9,7 @@
     <!-- /搜索栏 -->
 
     <!-- 搜索结果 -->
-    <result-search v-if="isResultShow" />
+    <result-search v-if="isResultShow" :topSearchText="topSearchText" />
     <!-- /搜索结果 -->
 
     <!-- 联想建议 -->
