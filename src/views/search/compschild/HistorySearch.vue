@@ -33,7 +33,7 @@ export default {
 
 <style scoped lang="less">
 .van-grid-item {
-  margin-top: 10px;
+  margin-top: 15px;
   width: 50px;
 
   /deep/ .van-grid-item__content {

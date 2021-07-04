@@ -37,9 +37,9 @@ export default {
   watch: {
     isResultShow: {
       handler(value) {
-        console.log(value)
         this.resultShow = value
       },
+      // 立即执行
       immediate: true,
     },
   },

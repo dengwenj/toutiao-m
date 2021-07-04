@@ -13,7 +13,10 @@
     <!-- /搜索结果 -->
 
     <!-- 联想建议 -->
-    <suggestion-search v-else-if="topSearchText" />
+    <suggestion-search
+      v-else-if="topSearchText"
+      :topSearchText="topSearchText"
+    />
     <!-- /联想建议 -->
 
     <!-- 历史记录 -->
@@ -40,7 +43,7 @@ export default {
   data() {
     return {
       isResultShow: false, // 控制搜索结果的显示状态
-      topSearchText: '', // 搜索栏传递过来的
+      topSearchText: '', // 搜索栏传递过来的内容
     }
   },
   computed: {},

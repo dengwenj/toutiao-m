@@ -1,25 +1,55 @@
 <template>
   <div class="suggestion-search">
-    <van-cell title="单元格" value="内容" icon="search"></van-cell>
     <van-cell
-      title="单元格"
-      value="内容"
-      label="描述信息"
+      :title="item"
       icon="search"
+      v-for="(item, index) in suggestions"
+      :key="index"
     ></van-cell>
   </div>
 </template>
 
 <script>
+// 网络请求
+import { getSearchSuggestions } from 'api/search'
+
 export default {
   name: 'SuggestionSearch',
   components: {},
-  props: {},
+  props: {
+    topSearchText: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
-    return {}
+    return {
+      suggestions: [], // 联想建议数据列表
+    }
   },
   computed: {},
-  watch: {},
+  // watch 可以实现对数据的监视，一旦数据发生改变就会触发执行函数
+  watch: {
+    // 数据发生改变才会触发执行函数 当一次输入值的时候页面还没渲染
+    // topSearchText(value) {
+    //   console.log(value)
+    // },
+
+    // 完整写法
+    topSearchText: {
+      // 当数据发生变化则会执行 handler 处理函数
+      async handler(newValue, oldValue) {
+        // console.log(newValue) // 新的数据
+        // console.log(oldValue) // 旧的数据 就是新的数据前一次的数据
+        // 找到数据接口
+        // 请求获取数据
+        // 模板绑定展示
+        const { data } = await getSearchSuggestions(newValue)
+        this.suggestions = data.data.options
+      },
+      immediate: true,
+    },
+  },
   created() {},
   mounted() {},
   methods: {},
