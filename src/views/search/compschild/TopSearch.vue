@@ -10,6 +10,8 @@
         background="#3296fa"
         @search="onSearch"
         @cancel="$router.back()"
+        @input="onInput"
+        @focus="onFocus"
       />
     </form>
   </div>
@@ -19,19 +21,45 @@
 export default {
   name: 'TopSearch',
   components: {},
-  props: {},
+  props: {
+    isResultShow: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      searchText: '', // 搜索栏输入的值
+      searchText: '', // 搜索栏输入的内容
+      resultShow: false, // 传递过去 展示的搜索结果
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    isResultShow: {
+      handler(value) {
+        console.log(value)
+        this.resultShow = value
+      },
+      immediate: true,
+    },
+  },
   created() {},
   mounted() {},
   methods: {
     onSearch() {
-      console.log('onsearch')
+      if (this.searchText) {
+        this.resultShow = true
+        this.$emit('resultShow', this.resultShow)
+      }
+    },
+
+    onInput() {
+      this.$emit('onInput', this.searchText)
+    },
+
+    onFocus() {
+      this.resultShow = false
+      this.$emit('resultShow', this.resultShow)
     },
   },
 }

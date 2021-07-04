@@ -1,20 +1,24 @@
 <template>
   <div class="search-container">
     <!-- 搜索栏 -->
-    <top-search />
+    <top-search
+      :isResultShow="isResultShow"
+      @onInput="onInput"
+      @resultShow="resultShow"
+    />
     <!-- /搜索栏 -->
 
+    <!-- 搜索结果 -->
+    <result-search v-if="isResultShow" />
+    <!-- /搜索结果 -->
+
     <!-- 联想建议 -->
-    <suggestion-search />
+    <suggestion-search v-else-if="topSearchText" />
     <!-- /联想建议 -->
 
     <!-- 历史记录 -->
-    <history-search />
+    <history-search v-else />
     <!-- /历史记录 -->
-
-    <!-- 搜索结果 -->
-    <result-search />
-    <!-- /搜索结果 -->
   </div>
 </template>
 
@@ -34,13 +38,24 @@ export default {
   },
   props: {},
   data() {
-    return {}
+    return {
+      isResultShow: false, // 控制搜索结果的显示状态
+      topSearchText: '', // 搜索栏传递过来的
+    }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    onInput(searchText) {
+      this.topSearchText = searchText
+    },
+
+    resultShow(resultShow) {
+      this.isResultShow = resultShow
+    },
+  },
 }
 </script>
 
