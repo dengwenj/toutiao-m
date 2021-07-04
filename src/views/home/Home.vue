@@ -24,6 +24,11 @@ import HomeTab from './compschild/HomeTab'
 import Popup from './compschild/Popup'
 import ChannelEdit from './compschild/ChannelEdit'
 
+import { getItem } from 'utils/storage'
+
+// vuex
+import { mapState } from 'vuex'
+
 // 网络请求
 import { getUserChannels } from 'api/user'
 
@@ -42,7 +47,9 @@ export default {
       isChannelEditShow: false, // 弹出层 显示频道列表
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['user']),
+  },
   watch: {},
   created() {
     // 网络请求
@@ -50,10 +57,26 @@ export default {
   },
   mounted() {},
   methods: {
-    // 网络请求
     async _getUserChannels() {
-      const { data } = await getUserChannels()
-      this.channels = data.data.channels
+      let userchannels = []
+      if (this.user) {
+        // 已登录，存储到线上的接口文档
+        const { data } = await getUserChannels()
+        userchannels = data.data.channels
+      } else {
+        // 未登录，判断是否有本地存储的频道列表数据
+        // 有本地存储的频道列表则使用
+        if (window.localStorage.getItem('user-channels')) {
+          userchannels = getItem('user-channels')
+        } else {
+          // 用户没有登录，也没有本地存储的频道，那就请求获取默认推荐的频道列表
+          const { data } = await getUserChannels()
+          userchannels = data.data.channels
+        }
+      }
+      this.channels = userchannels
+      // const { data } = await getUserChannels()
+      // this.channels = data.data.channels
     },
 
     // 子传父 HomeTab 组件
