@@ -1,6 +1,11 @@
 <template>
   <div class="suggestion-search">
-    <van-cell icon="search" v-for="(item, index) in suggestions" :key="index">
+    <van-cell
+      icon="search"
+      v-for="(item, index) in suggestions"
+      :key="index"
+      @click="search(item)"
+    >
       <div slot="title" v-html="highlight(item)"></div>
     </van-cell>
   </div>
@@ -72,6 +77,11 @@ export default {
         reg,
         `<span style="color:#3296fa">${this.topSearchText}</span>`
       )
+    },
+
+    search(item) {
+      // 事件总线
+      this.$bus.$emit('search', item)
     },
   },
 }

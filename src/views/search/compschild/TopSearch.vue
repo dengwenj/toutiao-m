@@ -44,7 +44,14 @@ export default {
     },
   },
   created() {},
-  mounted() {},
+  mounted() {
+    // 事件总线
+    this.$bus.$on('search', (item) => {
+      this.searchText = item
+      //
+      this.onSearch()
+    })
+  },
   methods: {
     onSearch() {
       if (this.searchText) {
