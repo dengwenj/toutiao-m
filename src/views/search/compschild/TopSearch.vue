@@ -31,6 +31,7 @@ export default {
     return {
       searchText: '', // 搜索栏输入的内容
       resultShow: false, // 传递过去 展示的搜索结果
+      searchHistory: [], // 搜索历史
     }
   },
   computed: {},
@@ -48,7 +49,7 @@ export default {
     // 事件总线
     this.$bus.$on('search', (item) => {
       this.searchText = item
-      //
+      // 点击联想建议进入搜索
       this.onSearch()
     })
   },
@@ -57,6 +58,20 @@ export default {
       if (this.searchText) {
         this.resultShow = true
         this.$emit('resultShow', this.resultShow)
+
+        // indexOf()方法返回在数组中可以找到一个给定元素的第一个索引，如果不存在，则返回-1。
+        const index = this.searchHistory.indexOf(this.searchText)
+        // console.log(index)
+        if (this.searchHistory.indexOf(this.searchText) !== -1) {
+          // 不等于 -1 说明存在
+          // 存才的话 就删除
+          this.searchHistory.splice(index, 1)
+        }
+        // 把最新的搜索历史记录放到顶部
+        this.searchHistory.unshift(this.searchText)
+
+        // 展示历史记录 传递过去
+        this.$emit('searchHistory', this.searchHistory)
       }
     },
 

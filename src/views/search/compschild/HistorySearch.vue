@@ -8,9 +8,12 @@
       <!-- <van-icon name="delete-o" /> -->
     </van-cell>
     <van-grid :gutter="20">
-      <van-grid-item icon="close" text="文字" />
-      <van-grid-item icon="close" text="文字" />
-      <van-grid-item icon="close" text="文字" />
+      <van-grid-item
+        icon="close"
+        :text="item"
+        v-for="(item, index) in searchLishi"
+        :key="index"
+      />
     </van-grid>
   </div>
 </template>
@@ -19,7 +22,14 @@
 export default {
   name: '',
   components: {},
-  props: {},
+  props: {
+    searchLishi: {
+      type: Array,
+      default() {
+        return []
+      },
+    },
+  },
   data() {
     return {}
   },

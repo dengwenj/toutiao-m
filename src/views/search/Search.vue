@@ -5,6 +5,7 @@
       :isResultShow="isResultShow"
       @onInput="onInput"
       @resultShow="resultShow"
+      @searchHistory="searchHistory"
     />
     <!-- /搜索栏 -->
 
@@ -20,7 +21,7 @@
     <!-- /联想建议 -->
 
     <!-- 历史记录 -->
-    <history-search v-else />
+    <history-search v-else :searchLishi="searchLishi" />
     <!-- /历史记录 -->
   </div>
 </template>
@@ -44,6 +45,7 @@ export default {
     return {
       isResultShow: false, // 控制搜索结果的显示状态
       topSearchText: '', // 搜索栏传递过来的内容
+      searchLishi: [], // 历史记录
     }
   },
   computed: {},
@@ -57,6 +59,11 @@ export default {
 
     resultShow(resultShow) {
       this.isResultShow = resultShow
+    },
+
+    searchHistory(searchHistory) {
+      console.log(searchHistory)
+      this.searchLishi = searchHistory
     },
   },
 }
