@@ -18,6 +18,11 @@
 </template>
 
 <script>
+import { setItem, getItem } from 'utils/storage'
+import { getSearchHistory } from 'api/search'
+
+import { mapState } from 'vuex'
+
 export default {
   name: 'TopSearch',
   components: {},
@@ -34,7 +39,9 @@ export default {
       searchHistory: [], // 搜索历史
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['user']),
+  },
   watch: {
     isResultShow: {
       handler(value) {
@@ -44,7 +51,10 @@ export default {
       immediate: true,
     },
   },
-  created() {},
+  created() {
+    // 发送请求
+    this._getSearchHistory()
+  },
   mounted() {
     // 事件总线
     this.$bus.$on('search', (item) => {
@@ -70,6 +80,25 @@ export default {
         // 把最新的搜索历史记录放到顶部
         this.searchHistory.unshift(this.searchText)
 
+        // 数据持久化
+        // 如果用户已登录，则把搜索历史记录存储到线上
+        // 只要我们调用获取搜索结果的数据接口，后端会给我们自动存储用户的搜索历史记录
+        // 如果没有登录，则把搜索历史记录存储到本地
+        setItem('search-history', this.searchHistory)
+
+        // 展示历史记录 传递过去
+        this.$emit('searchHistory', this.searchHistory)
+      }
+    },
+
+    async _getSearchHistory() {
+      // 因为后端帮我们存储的用户搜索历史记录太少了
+      // 所以这里让后端返回的历史记录和本地的历史记录合并到一起
+      let searchHistory = getItem('search-history') || []
+      if (this.user) {
+        const { data } = await getSearchHistory()
+        searchHistory = [...new Set([...searchHistory, ...data.data.keywords])]
+        this.searchHistory = searchHistory
         // 展示历史记录 传递过去
         this.$emit('searchHistory', this.searchHistory)
       }
