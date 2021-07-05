@@ -1,15 +1,15 @@
 <template>
   <div class="">
     <van-cell title="历史记录">
-      <div>
+      <div v-if="isDeleteShow">
         <span>全部删除</span>&nbsp;&nbsp;
-        <span>完成</span>
+        <span @click="isDeleteShow = false">完成</span>
       </div>
-      <!-- <van-icon name="delete-o" /> -->
+      <van-icon v-else name="delete-o" @click="isDeleteShow = true" />
     </van-cell>
     <van-grid :gutter="20">
       <van-grid-item
-        icon="close"
+        :icon="isDeleteShow ? 'close' : ''"
         :text="item"
         v-for="(item, index) in searchLishi"
         :key="index"
@@ -31,7 +31,9 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      isDeleteShow: false, // 删除的显示状态
+    }
   },
   computed: {},
   watch: {},
