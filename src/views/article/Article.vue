@@ -27,6 +27,9 @@
 import UserInfoArticle from './compschild/UserInfoArticle'
 import TextArticle from './compschild/TextArticle'
 
+// 网络请求
+import { getArticleById } from 'api/article'
+
 export default {
   name: 'Article',
   components: {
@@ -40,7 +43,7 @@ export default {
   props: {
     articleId: {
       // 动态路由传递过来的
-      type: String,
+      type: [String, Number, Object],
       required: true,
     },
   },
@@ -49,9 +52,17 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    // 发送请求
+    this._getArticleById()
+  },
   mounted() {},
-  methods: {},
+  methods: {
+    async _getArticleById() {
+      const { data } = await getArticleById(this.articleId)
+      console.log(data)
+    },
+  },
 }
 </script>
 
