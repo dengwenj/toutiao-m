@@ -19,7 +19,7 @@
       <!-- /文章详情用户信息 -->
 
       <!-- 文章详情正文 -->
-      <text-article :articleDetails="articleDetails" />
+      <text-article ref="text-article" :articleDetails="articleDetails" />
       <!-- /文章详情正文 -->
     </div>
   </div>
@@ -32,13 +32,15 @@ import TextArticle from './compschild/TextArticle'
 // 网络请求
 import { getArticleById } from 'api/article'
 
+//  图片预览
+import { ImagePreview } from 'vant'
+
 export default {
   name: 'Article',
   components: {
     UserInfoArticle,
     TextArticle,
   },
-
   // 在组件中获取动态路由参数
   //     方式一：this.$route.params.articleId
   //     方式二: props 传参   在路由里面 props:true
@@ -65,6 +67,42 @@ export default {
     async _getArticleById() {
       const { data } = await getArticleById(this.articleId)
       this.articleDetails = data.data
+
+      // 数据改变影响视图更新（dom数据）不是立即的
+      // 所以如果需要在修改数据之后马上操作被数据影响的视图 dom 需要把这个代码放在 $nextTick 中
+      // this.$nextTick 是 vue 中的方法
+      this.$nextTick(() => {
+        this.handlePerviewImage()
+      })
+    },
+
+    // 图片预览 操作 DOM
+    handlePerviewImage() {
+      // 1 获取文章内容 DOM 容器
+      const textArticle = this.$refs['text-article'].$el
+
+      // 2 得到所有的 img 标签
+      const imgs = textArticle.querySelectorAll('img')
+
+      // 3 循环 img 列表，给 img 注册点击事件
+      const imgPaths = [] // 收集所有的图片路径
+      imgs.forEach((item, index) => {
+        imgPaths.push(item.src)
+        // item.onclick = function () {
+        //   // 4 在事件处理函数中调用 ImagePreview() 预览
+        //   ImagePreview({
+        //     images: imgPaths, // 预览图片路径列表
+        //     startPosition: index, // 起始位置
+        //   })
+        // }
+        item.addEventListener('click', function () {
+          // 4 在事件处理函数中调用 ImagePreview() 预览
+          ImagePreview({
+            images: imgPaths, // 预览图片路径列表
+            startPosition: index, // 起始位置
+          })
+        })
+      })
     },
   },
 }

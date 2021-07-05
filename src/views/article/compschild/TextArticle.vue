@@ -1,4 +1,5 @@
 <template>
+  <!-- 内容有标签的话 可以用 v-html 指令 -->
   <div class="markdown-body" v-html="articleDetails.content"></div>
 </template>
 
