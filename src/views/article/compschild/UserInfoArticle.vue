@@ -6,12 +6,19 @@
         slot="icon"
         fit="cover"
         round
-        src="https://img01.yzcdn.cn/vant/cat.jpeg"
+        :src="articleDetails.aut_photo"
       />
-      <div slot="title" class="user-name">天涯小型客</div>
-      <div slot="label" class="user-time">14小时前</div>
-      <van-button class="attention" round type="info" size="small" icon="plus"
-        >关注</van-button
+      <div slot="title" class="user-name">{{ articleDetails.aut_name }}</div>
+      <div slot="label" class="user-time">
+        {{ articleDetails.pubdate | relativeTime }}
+      </div>
+      <van-button
+        class="attention"
+        round
+        :type="articleDetails.is_followed ? 'default' : 'info'"
+        size="small"
+        :icon="articleDetails.is_followed ? '' : 'plus'"
+        >{{ articleDetails.is_followed ? '已关注' : '关注' }}</van-button
       >
     </van-cell>
   </div>
@@ -21,7 +28,14 @@
 export default {
   name: '',
   components: {},
-  props: {},
+  props: {
+    articleDetails: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+  },
   data() {
     return {}
   },

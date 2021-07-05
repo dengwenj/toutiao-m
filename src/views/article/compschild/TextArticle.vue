@@ -1,14 +1,5 @@
 <template>
-  <div class="markdown-body">
-    <p>wrold</p>
-    <ul>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-    </ul>
-    <a href="">hhhhh</a>
-  </div>
+  <div class="markdown-body" v-html="articleDetails.content"></div>
 </template>
 
 <script>
@@ -17,7 +8,14 @@ import './github-markdown.css'
 export default {
   name: '',
   components: {},
-  props: {},
+  props: {
+    articleDetails: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+  },
   data() {
     return {}
   },

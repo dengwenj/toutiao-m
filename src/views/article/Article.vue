@@ -9,17 +9,19 @@
     />
     <!-- /文章详情导航 -->
 
-    <!-- 文章详情标题 -->
-    <h1 class="title">牛逼程序员都用的开源工具，你用了 几个？</h1>
-    <!-- /文章详情标题 -->
+    <div class="fixed">
+      <!-- 文章详情标题 -->
+      <h1 class="title">{{ articleDetails.title }}</h1>
+      <!-- /文章详情标题 -->
 
-    <!-- 文章详情用户信息 -->
-    <user-info-article />
-    <!-- /文章详情用户信息 -->
+      <!-- 文章详情用户信息 -->
+      <user-info-article :articleDetails="articleDetails" />
+      <!-- /文章详情用户信息 -->
 
-    <!-- 文章详情正文 -->
-    <text-article />
-    <!-- /文章详情正文 -->
+      <!-- 文章详情正文 -->
+      <text-article :articleDetails="articleDetails" />
+      <!-- /文章详情正文 -->
+    </div>
   </div>
 </template>
 
@@ -48,7 +50,9 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      articleDetails: {}, // 文章详情
+    }
   },
   computed: {},
   watch: {},
@@ -60,7 +64,7 @@ export default {
   methods: {
     async _getArticleById() {
       const { data } = await getArticleById(this.articleId)
-      console.log(data)
+      this.articleDetails = data.data
     },
   },
 }
@@ -68,11 +72,19 @@ export default {
 
 <style scoped lang="less">
 .article-container {
-  .title {
-    font-size: 20px;
-    padding: 15px;
-    color: #333;
-    background-color: #fff;
+  .fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 46px;
+    overflow: auto;
+    .title {
+      font-size: 20px;
+      padding: 15px;
+      color: #333;
+      background-color: #fff;
+    }
   }
 }
 </style>
