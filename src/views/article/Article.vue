@@ -16,16 +16,22 @@
     <!-- 文章详情用户信息 -->
     <user-info-article />
     <!-- /文章详情用户信息 -->
+
+    <!-- 文章详情正文 -->
+    <text-article />
+    <!-- /文章详情正文 -->
   </div>
 </template>
 
 <script>
 import UserInfoArticle from './compschild/UserInfoArticle'
+import TextArticle from './compschild/TextArticle'
 
 export default {
   name: 'Article',
   components: {
     UserInfoArticle,
+    TextArticle,
   },
 
   // 在组件中获取动态路由参数
@@ -35,7 +41,7 @@ export default {
     articleId: {
       // 动态路由传递过来的
       type: String,
-      default: '',
+      required: true,
     },
   },
   data() {
