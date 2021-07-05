@@ -16,6 +16,8 @@ const My = () =>
   import ('views/my/My')
 const Search = () =>
   import ('views/search/Search')
+const Article = () =>
+  import ('views/article/Article')
 
 
 Vue.use(VueRouter)
@@ -52,6 +54,12 @@ const routes = [{
     path: '/search',
     name: 'search',
     component: Search
+  },
+  { // 动态路由
+    path: '/article/:articleId',
+    name: 'article',
+    component: Article,
+    props: true
   }
 ]
 

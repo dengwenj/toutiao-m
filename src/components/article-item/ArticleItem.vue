@@ -1,5 +1,8 @@
 <template>
-  <van-cell class="aticle-item">
+  <van-cell
+    class="aticle-item"
+    :to="{ name: 'article', params: { articleId: article.art_id } }"
+  >
     <div slot="title" class="title van-multi-ellipsis--l3">
       {{ article.title }}
     </div>
@@ -47,7 +50,12 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    // articleId(id) { 可以点击跳转文章详情  也可以用 :to="" Vant中写好了
+    //   @click="articleId(article.art_id)"
+    //   this.$router.push(`/article/${id}`)
+    // },
+  },
 }
 </script>
 
