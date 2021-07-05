@@ -2,7 +2,7 @@
   <div class="">
     <van-cell title="历史记录">
       <div v-if="isDeleteShow">
-        <span>全部删除</span>&nbsp;&nbsp;
+        <span @click="liShi = []">全部删除</span>&nbsp;&nbsp;
         <span @click="isDeleteShow = false">完成</span>
       </div>
       <van-icon v-else name="delete-o" @click="isDeleteShow = true" />
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { setItem, getItem } from 'utils/storage'
+
 export default {
   name: '',
   components: {},
@@ -44,12 +46,19 @@ export default {
     },
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.liShi = getItem('lishi')
+  },
   methods: {
     onDetele(item, index) {
       // 如果删除状态，则执行删除操作
       if (this.isDeleteShow) {
         this.liShi.splice(index, 1)
+
+        // 数据持久化
+        // 线上的数据接口有问题
+        // 修改本地存储的数据
+        setItem('lishi', this.liShi)
         return
       }
 
