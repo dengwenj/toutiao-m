@@ -11,8 +11,9 @@
       <van-grid-item
         :icon="isDeleteShow ? 'close' : ''"
         :text="item"
-        v-for="(item, index) in searchLishi"
+        v-for="(item, index) in liShi"
         :key="index"
+        @click="onDetele(item, index)"
       />
     </van-grid>
   </div>
@@ -33,13 +34,29 @@ export default {
   data() {
     return {
       isDeleteShow: false, // 删除的显示状态
+      liShi: [],
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    searchLishi(value) {
+      this.liShi = value
+    },
+  },
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    onDetele(item, index) {
+      // 如果删除状态，则执行删除操作
+      if (this.isDeleteShow) {
+        this.liShi.splice(index, 1)
+        return
+      }
+
+      // 非删除状态，展示搜索结果
+      this.$bus.$emit('history', item)
+    },
+  },
 }
 </script>
 

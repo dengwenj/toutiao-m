@@ -61,6 +61,16 @@ export default {
       this.searchText = item
       // 点击联想建议进入搜索
       this.onSearch()
+      // 这样才能把搜索关键字发出去请求搜索结果
+      this.onInput()
+    })
+
+    this.$bus.$on('history', (item) => {
+      this.searchText = item
+      // 点击历史记录进入搜索
+      this.onSearch()
+      // 这样才能把搜索关键字发出去请求搜索结果
+      this.onInput()
     })
   },
   methods: {
