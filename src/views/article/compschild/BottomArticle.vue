@@ -8,13 +8,18 @@
       :name="articleDetails.is_collected ? 'star' : 'star-o'"
       @click="onCollected"
     />
-    <van-icon class="good-job" color="#777" name="good-job-o" />
+    <van-icon
+      class="good-job"
+      :color="articleDetails.attitude === 1 ? '#3296fa' : '#777'"
+      :name="articleDetails.attitude === 1 ? 'good-job' : 'good-job-o'"
+      @click="onLike"
+    />
     <van-icon class="share" name="share" />
   </div>
 </template>
 
 <script>
-import { addArticle, deleteArticle } from 'api/article'
+import { addArticle, deleteArticle, addLike, deleteLike } from 'api/article'
 
 export default {
   name: '',
@@ -35,6 +40,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 文章收藏
     async onCollected() {
       this.$toast.loading({
         message: '操作中...',
@@ -51,6 +57,26 @@ export default {
       this.articleDetails.is_collected = !this.articleDetails.is_collected
       this.$toast.success(
         `${this.articleDetails.is_collected ? '' : '取消'}收藏成功`
+      )
+    },
+
+    // 文章点赞
+    async onLike() {
+      this.$toast.loading({
+        message: '操作中...',
+        forbidClick: true,
+      })
+      if (this.articleDetails.attitude === 1) {
+        //  已点赞，取消点赞
+        await deleteLike(this.articleDetails.art_id)
+        this.articleDetails.attitude = -1
+      } else {
+        // 未点赞，添加点赞
+        await addLike(this.articleDetails.art_id)
+        this.articleDetails.attitude = 1
+      }
+      this.$toast.success(
+        `${this.articleDetails.attitude === 1 ? '' : '取消'}点赞成功`
       )
     },
   },
