@@ -35,9 +35,9 @@
     <!-- /底部区域 -->
 
     <!-- 发布评论 -->
-    <van-popup v-model="isReleaseCommentshow" position="bottom"
-      >hhhhhh</van-popup
-    >
+    <van-popup v-model="isReleaseCommentshow" position="bottom">
+      <release-comment :target="articleId" />
+    </van-popup>
     <!-- /发布评论 -->
   </div>
 </template>
@@ -47,6 +47,7 @@ import UserInfoArticle from './compschild/UserInfoArticle'
 import TextArticle from './compschild/TextArticle'
 import BottomArticle from './compschild/BottomArticle'
 import CommentList from './compschild/CommentList'
+import ReleaseComment from './compschild/ReleaseComment'
 
 // 网络请求
 import { getArticleById } from 'api/article'
@@ -61,6 +62,7 @@ export default {
     TextArticle,
     BottomArticle,
     CommentList,
+    ReleaseComment,
   },
   // 在组件中获取动态路由参数
   //     方式一：this.$route.params.articleId
