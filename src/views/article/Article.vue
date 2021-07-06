@@ -21,6 +21,10 @@
       <!-- 文章详情正文 -->
       <text-article ref="text-article" :articleDetails="articleDetails" />
       <!-- /文章详情正文 -->
+
+      <!-- 评论列表 -->
+      <comment-list />
+      <!-- /评论列表 -->
     </div>
 
     <!-- 底部区域 -->
@@ -33,6 +37,7 @@
 import UserInfoArticle from './compschild/UserInfoArticle'
 import TextArticle from './compschild/TextArticle'
 import BottomArticle from './compschild/BottomArticle'
+import CommentList from './compschild/CommentList'
 
 // 网络请求
 import { getArticleById } from 'api/article'
@@ -46,6 +51,7 @@ export default {
     UserInfoArticle,
     TextArticle,
     BottomArticle,
+    CommentList,
   },
   // 在组件中获取动态路由参数
   //     方式一：this.$route.params.articleId
