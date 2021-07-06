@@ -22,12 +22,17 @@
       <text-article ref="text-article" :articleDetails="articleDetails" />
       <!-- /文章详情正文 -->
     </div>
+
+    <!-- 底部区域 -->
+    <bottom-article :articleDetails="articleDetails" />
+    <!-- /底部区域 -->
   </div>
 </template>
 
 <script>
 import UserInfoArticle from './compschild/UserInfoArticle'
 import TextArticle from './compschild/TextArticle'
+import BottomArticle from './compschild/BottomArticle'
 
 // 网络请求
 import { getArticleById } from 'api/article'
@@ -40,6 +45,7 @@ export default {
   components: {
     UserInfoArticle,
     TextArticle,
+    BottomArticle,
   },
   // 在组件中获取动态路由参数
   //     方式一：this.$route.params.articleId
@@ -114,7 +120,7 @@ export default {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 50px;
     top: 46px;
     overflow: auto;
     .title {
