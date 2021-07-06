@@ -28,8 +28,17 @@
     </div>
 
     <!-- 底部区域 -->
-    <bottom-article :articleDetails="articleDetails" />
+    <bottom-article
+      :articleDetails="articleDetails"
+      @writeComment="isReleaseCommentshow = $event"
+    />
     <!-- /底部区域 -->
+
+    <!-- 发布评论 -->
+    <van-popup v-model="isReleaseCommentshow" position="bottom"
+      >hhhhhh</van-popup
+    >
+    <!-- /发布评论 -->
   </div>
 </template>
 
@@ -66,6 +75,7 @@ export default {
   data() {
     return {
       articleDetails: {}, // 文章详情
+      isReleaseCommentshow: false, // 发布评论
     }
   },
   computed: {},

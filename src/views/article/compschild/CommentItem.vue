@@ -65,11 +65,11 @@ export default {
       if (this.comment.is_liking) {
         // 已点赞，取消点赞
         await commentLike(com_id)
-        this.like_count--
+        this.comment.like_count--
       } else {
         // 未点赞，点赞
         await deleteCommentLike(com_id)
-        this.like_count++
+        this.comment.like_count++
       }
       // 更新视图
       this.comment.is_liking = !this.comment.is_liking

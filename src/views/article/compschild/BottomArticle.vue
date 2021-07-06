@@ -1,6 +1,8 @@
 <template>
   <div class="bottom-article">
-    <van-button class="comment-btn" round>写评论</van-button>
+    <van-button class="comment-btn" round @click="writeComment"
+      >写评论</van-button
+    >
     <van-icon class="comment" color="#777" name="comment-o" badge="99+" />
     <van-icon
       class="star"
@@ -78,6 +80,11 @@ export default {
       this.$toast.success(
         `${this.articleDetails.attitude === 1 ? '' : '取消'}点赞成功`
       )
+    },
+
+    // 点击写评论
+    writeComment() {
+      this.$emit('writeComment', true)
     },
   },
 }
