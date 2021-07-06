@@ -50,7 +50,13 @@ export default {
   created() {
     // console.log(this.$route.params.articleId)  130178  130054 127849
   },
-  mounted() {},
+  mounted() {
+    // 接收事件总线
+    this.$bus.$on('newComment', (newComment) => {
+      // 把新的文章评论添加在列表中
+      this.list.unshift(newComment)
+    })
+  },
   methods: {
     async onLoad() {
       // 1 请求获取数据

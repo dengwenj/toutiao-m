@@ -20,9 +20,7 @@
         </div>
       </div>
       <div class="content">
-        {{
-          comment.content
-        }}反馈来看待科拉深孔sad卡沙丁卢卡斯可付款个空格看得开的看法国际经济基督教的接口仅仅是靠阿卡丽放好久结束啦了防火墙
+        {{ comment.content }}
       </div>
     </div>
     <div slot="label" class="label">

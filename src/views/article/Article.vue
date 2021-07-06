@@ -36,7 +36,7 @@
 
     <!-- 发布评论 -->
     <van-popup v-model="isReleaseCommentshow" position="bottom">
-      <release-comment :target="articleId" />
+      <release-comment :target="articleId" @releaseComment="releaseComment" />
     </van-popup>
     <!-- /发布评论 -->
   </div>
@@ -127,6 +127,18 @@ export default {
           })
         })
       })
+    },
+
+    // 点击发布评论了
+    releaseComment(newComment) {
+      // 关闭弹出层
+      this.isReleaseCommentshow = false
+
+      // 事件总线
+      this.$bus.$emit('newComment', newComment)
+
+      // 提示用户评论发布成功
+      this.$toast.success('发布成功')
     },
   },
 }
