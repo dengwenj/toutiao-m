@@ -4,6 +4,7 @@
 
 import request from "utils/request"
 
+
 // 在非组件模块中获取 store 必须通过这种方式，这里单独加载 store 和在组件中 this.$store 是一个东西
 // import store from "store/"
 
@@ -40,5 +41,24 @@ export const getUserChannels = () => {
   return request({
     url: '/app/v1_0/user/channels',
     method: 'GET'
+  })
+}
+
+// 关注用户
+export const addFollow = userId => {
+  return request({
+    method: 'POST',
+    url: '/app/v1_0/user/followings',
+    data: {
+      target: userId
+    }
+  })
+}
+
+// 取消用户关注
+export const deleteFollow = userId => {
+  return request({
+    method: 'DELETE',
+    url: `/app/v1_0/user/followings/${userId}`
   })
 }

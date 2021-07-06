@@ -18,6 +18,8 @@
         :type="articleDetails.is_followed ? 'default' : 'info'"
         size="small"
         :icon="articleDetails.is_followed ? '' : 'plus'"
+        :loading="isloading"
+        @click="onFollow"
         >{{ articleDetails.is_followed ? '已关注' : '关注' }}</van-button
       >
     </van-cell>
@@ -25,6 +27,8 @@
 </template>
 
 <script>
+import { addFollow, deleteFollow } from 'api/user'
+
 export default {
   name: '',
   components: {},
@@ -37,13 +41,29 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      isloading: false,
+    }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    // 点击是否关注
+    async onFollow() {
+      this.isloading = true
+      if (this.articleDetails.is_followed) {
+        // 已关注，取消关注
+        await deleteFollow(this.articleDetails.aut_id)
+      } else {
+        // 未关注，添加关注
+        await addFollow(this.articleDetails.aut_id)
+      }
+      this.articleDetails.is_followed = !this.articleDetails.is_followed
+      this.isloading = false
+    },
+  },
 }
 </script>
 
