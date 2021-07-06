@@ -23,7 +23,7 @@
       <!-- /文章详情正文 -->
 
       <!-- 评论列表 -->
-      <comment-list />
+      <comment-list :articleId="articleId" />
       <!-- /评论列表 -->
     </div>
 
