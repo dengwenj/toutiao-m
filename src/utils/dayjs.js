@@ -24,6 +24,11 @@ Vue.filter('relativeTime', value => {
   return dayjs(value).from(dayjs())
 })
 
+Vue.filter('formatComment', value => {
+  // 过滤器的返回值会渲染到使用过滤器的模板中
+  return dayjs(value).format('DD-MM HH:mm')
+})
+
 // console.log(dayjs('2020-7-2').from())
 
 // console.log(dayjs('2019-01-25').format('YYYY-MM-DD'));
