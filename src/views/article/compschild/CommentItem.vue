@@ -10,8 +10,12 @@
     <div slot="title" class="title">
       <div>
         <div class="name">{{ comment.aut_name }}</div>
-        <div>
-          <van-icon class="good-job" name="good-job-o" />
+        <div @click="onCommentLike">
+          <van-icon
+            class="good-job"
+            :class="{ islike: comment.is_liking }"
+            :name="comment.is_liking ? 'good-job' : 'good-job-o'"
+          />
           <span class="shuliang">{{ comment.like_count }}</span>
         </div>
       </div>
@@ -31,6 +35,8 @@
 </template>
 
 <script>
+import { commentLike, deleteCommentLike } from 'api/comment'
+
 export default {
   name: 'CommentItem',
   components: {},
@@ -49,7 +55,28 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    async onCommentLike() {
+      this.$toast.loading({
+        message: '操作中...',
+        forbidClick: true,
+      })
+      const com_id = this.comment.com_id.toString()
+      if (this.comment.is_liking) {
+        // 已点赞，取消点赞
+        await commentLike(com_id)
+        this.like_count--
+      } else {
+        // 未点赞，点赞
+        await deleteCommentLike(com_id)
+        this.like_count++
+      }
+      // 更新视图
+      this.comment.is_liking = !this.comment.is_liking
+
+      this.$toast.success(`${this.comment.is_liking ? '' : '取消'}点赞成功`)
+    },
+  },
 }
 </script>
 
@@ -103,6 +130,9 @@ export default {
     right: 20px;
     color: #000;
     font-size: 14px;
+  }
+  .islike {
+    color: #3296fa;
   }
 }
 </style>
