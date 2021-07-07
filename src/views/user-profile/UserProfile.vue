@@ -26,6 +26,16 @@
        :value = "user.name"
        @input = "user.name = $event"
     -->
+    <!-- 
+       如果有多个数据需要保持同步，使用 .sync 修饰符 
+       :gender.sync = "user.gender"
+       :gender = "user.gender"
+       @update:gender = "user.gender"
+
+       子组件中就是这样
+       props:{gender:{type:Number}}
+       this.$emit('update:gender',0)  update:gender必须这样写
+     -->
     <update-name :name="name" @cross="name = !name" v-model="user.name" />
     <!-- /修改昵称 -->
   </div>
