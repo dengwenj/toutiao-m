@@ -18,6 +18,8 @@ const Search = () =>
   import ('views/search/Search')
 const Article = () =>
   import ('views/article/Article')
+const UserProfile = () =>
+  import ('views/user-profile/UserProfile')
 
 
 Vue.use(VueRouter)
@@ -60,6 +62,11 @@ const routes = [{
     name: 'article',
     component: Article,
     props: true
+  },
+  {
+    path: '/user/profile',
+    name: 'user-profile',
+    component: UserProfile
   }
 ]
 
