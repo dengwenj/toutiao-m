@@ -46,7 +46,15 @@
 
     <!-- 评论回复 -->
     <van-popup v-model="isReplyShow" position="bottom">
-      <comment-reply :c="comment" @cross="isReplyShow = false" />
+      <!-- 
+        这里使用 v-if 的目的是让组件随着弹出层的显示进行渲染和销毁，防止加载过的组件不重新渲染导致数据不会重新加载的问题
+        这个有评论回复 1326029163924029440
+       -->
+      <comment-reply
+        v-if="isReplyShow"
+        :c="comment"
+        @cross="isReplyShow = false"
+      />
     </van-popup>
     <!-- /评论回复 -->
   </div>

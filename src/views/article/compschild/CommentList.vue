@@ -35,6 +35,10 @@ export default {
       type: [Number, String, Object],
       required: true,
     },
+    type: {
+      type: String,
+      default: 'a',
+    },
   },
   data() {
     return {
@@ -61,12 +65,12 @@ export default {
     async onLoad() {
       // 1 请求获取数据
       const { data } = await getComment({
-        type: 'a', // 评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
-        source: this.articleId, // 源id，文章id或评论id
+        type: this.type, // 评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
+        source: this.articleId.toString(), // 源id，文章id或评论id
         offset: this.offset, //获取评论数据的偏移量，值为评论id，表示从此id的数据向后取，不传表示从第一页开始读取数据
         limit: this.limit, // 获取的评论数据个数，不传表示采用后端服务设定的默认每页数据量
       })
-      // console.log(data)
+      console.log(data)
       // 事件总线 把总的评论发到底部去
       this.$emit('totalCommentCount', data.data.total_count)
 
