@@ -3,7 +3,12 @@
     <van-button class="comment-btn" round @click="writeComment"
       >写评论</van-button
     >
-    <van-icon class="comment" color="#777" name="comment-o" badge="99+" />
+    <van-icon
+      class="comment"
+      color="#777"
+      name="comment-o"
+      :badge="totalComment"
+    />
     <van-icon
       class="star"
       :color="articleDetails.is_collected ? '#3296fa' : '#777'"
@@ -32,6 +37,10 @@ export default {
       default() {
         return {}
       },
+    },
+    totalComment: {
+      type: Number,
+      required: true,
     },
   },
   data() {

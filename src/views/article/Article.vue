@@ -23,7 +23,10 @@
       <!-- /文章详情正文 -->
 
       <!-- 评论列表 -->
-      <comment-list :articleId="articleId" />
+      <comment-list
+        :articleId="articleId"
+        @totalCommentCount="totalCommentCount"
+      />
       <!-- /评论列表 -->
     </div>
 
@@ -31,6 +34,7 @@
     <bottom-article
       :articleDetails="articleDetails"
       @writeComment="isReleaseCommentshow = $event"
+      :totalComment="totalComment"
     />
     <!-- /底部区域 -->
 
@@ -78,6 +82,7 @@ export default {
     return {
       articleDetails: {}, // 文章详情
       isReleaseCommentshow: false, // 发布评论
+      totalComment: 0, // 总评论
     }
   },
   computed: {},
@@ -139,6 +144,15 @@ export default {
 
       // 提示用户评论发布成功
       this.$toast.success('发布成功')
+
+      // 点击了发布就让总评论加1
+      this.totalComment++
+    },
+
+    // 总评论
+    totalCommentCount(totalCommentCount) {
+      console.log(totalCommentCount)
+      this.totalComment = totalCommentCount
     },
   },
 }
