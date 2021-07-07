@@ -46,7 +46,7 @@
 
     <!-- 评论回复 -->
     <van-popup v-model="isReplyShow" position="bottom">
-      <comment-reply />
+      <comment-reply :c="comment" @cross="isReplyShow = false" />
     </van-popup>
     <!-- /评论回复 -->
   </div>
@@ -92,6 +92,7 @@ export default {
       isReleaseCommentshow: false, // 发布评论
       totalComment: 0, // 总评论
       isReplyShow: false, // 回复评论
+      comment: {}, // 当前回复评论对象
     }
   },
   computed: {},
@@ -103,7 +104,7 @@ export default {
   mounted() {
     // 时间总线  回复评论
     this.$bus.$on('replyClick', (comment) => {
-      console.log(comment)
+      this.comment = comment
 
       // 点击了回复评论就把回复评论弹出层展示出来
       this.isReplyShow = true
@@ -168,7 +169,7 @@ export default {
 
     // 总评论
     totalCommentCount(totalCommentCount) {
-      console.log(totalCommentCount)
+      // console.log(totalCommentCount)
       this.totalComment = totalCommentCount
     },
   },
