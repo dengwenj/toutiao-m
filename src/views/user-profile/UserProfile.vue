@@ -17,7 +17,7 @@
     <van-cell title="生日" is-link :value="user.birthday" />
 
     <!-- 修改昵称 -->
-    <update-name :name="name" @cross="name = !name" />
+    <update-name :name="name" @cross="name = !name" :nicheng="user.name" />
     <!-- /修改昵称 -->
   </div>
 </template>

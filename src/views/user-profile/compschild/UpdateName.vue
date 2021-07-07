@@ -13,8 +13,8 @@
           rows="2"
           autosize
           type="textarea"
-          maxlength="50"
-          placeholder="请输入留言"
+          maxlength="7"
+          placeholder="请输入昵称"
           show-word-limit
         />
       </div>
@@ -31,12 +31,24 @@ export default {
       type: Boolean,
       required: true,
     },
+    nicheng: {
+      type: String,
+      // required: true,
+    },
   },
   data() {
-    return {}
+    return {
+      message: '',
+    }
   },
   computed: {},
-  watch: {},
+  watch: {
+    // 这里这样做 props里面的数据是异步获得的 可能这个数据还没有获取到 这时候 prop 就把值赋值给了 data 了，所有 data 里面拿的值是空
+    // 所以这样做 监视 prop 里面的变化
+    nicheng(value) {
+      this.message = value
+    },
+  },
   created() {},
   mounted() {},
   methods: {},
