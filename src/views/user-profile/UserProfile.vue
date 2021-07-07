@@ -17,12 +17,16 @@
     <van-cell title="生日" is-link :value="user.birthday" />
 
     <!-- 修改昵称 -->
-    <update-name
-      :name="name"
-      @cross="name = !name"
-      :nicheng="user.name"
-      @update-name="user.name = $event"
-    />
+    <!-- 
+       :nicheng="user.name"
+      @update-name="user.name = $event" 
+    -->
+    <!-- 
+       传递给子组件的数据纪要使用又要修改，这种情况可以使用 v-model 简写
+       :value = "user.name"
+       @input = "user.name = $event"
+    -->
+    <update-name :name="name" @cross="name = !name" v-model="user.name" />
     <!-- /修改昵称 -->
   </div>
 </template>

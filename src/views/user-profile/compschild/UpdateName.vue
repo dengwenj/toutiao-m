@@ -34,9 +34,10 @@ export default {
       type: Boolean,
       required: true,
     },
-    nicheng: {
+    // 声明接收父组件 v-model 传递的 value 数据
+    value: {
       type: String,
-      // required: true,
+      required: true,
     },
   },
   data() {
@@ -51,9 +52,9 @@ export default {
     // nicheng(value) {
     //   this.message = value
     // },
-    nicheng: {
-      handler(value) {
-        this.message = value
+    value: {
+      handler(val) {
+        this.message = val
       },
       immediate: true,
     },
@@ -73,7 +74,9 @@ export default {
           name: this.message,
         })
 
-        this.$emit('update-name', this.message)
+        // this.$emit('update-name', this.message)
+        // 发布 input 事件，更新父组件 v-model 绑定的数据
+        this.$emit('input', this.message)
 
         this.$emit('cross')
 
