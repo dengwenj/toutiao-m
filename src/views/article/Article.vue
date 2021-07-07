@@ -35,6 +35,7 @@
       :articleDetails="articleDetails"
       @writeComment="isReleaseCommentshow = $event"
       :totalComment="totalComment"
+      :bottomShow="true"
     />
     <!-- /底部区域 -->
 
@@ -53,7 +54,9 @@
       <comment-reply
         v-if="isReplyShow"
         :c="comment"
+        :wenzhangId="articleId"
         @cross="isReplyShow = false"
+        @totalComment="jaiyi"
       />
     </van-popup>
     <!-- /评论回复 -->
@@ -179,6 +182,11 @@ export default {
     totalCommentCount(totalCommentCount) {
       // console.log(totalCommentCount)
       this.totalComment = totalCommentCount
+    },
+
+    jaiyi(yi) {
+      // console.log(this.totalComment + parseInt(yi))
+      this.totalComment = this.totalComment + parseInt(yi)
     },
   },
 }

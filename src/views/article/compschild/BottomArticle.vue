@@ -3,25 +3,27 @@
     <van-button class="comment-btn" round @click="writeComment"
       >写评论</van-button
     >
-    <van-icon
-      class="comment"
-      color="#777"
-      name="comment-o"
-      :badge="totalComment"
-    />
-    <van-icon
-      class="star"
-      :color="articleDetails.is_collected ? '#3296fa' : '#777'"
-      :name="articleDetails.is_collected ? 'star' : 'star-o'"
-      @click="onCollected"
-    />
-    <van-icon
-      class="good-job"
-      :color="articleDetails.attitude === 1 ? '#3296fa' : '#777'"
-      :name="articleDetails.attitude === 1 ? 'good-job' : 'good-job-o'"
-      @click="onLike"
-    />
-    <van-icon class="share" name="share" />
+    <div v-if="bottomShow">
+      <van-icon
+        class="comment"
+        color="#777"
+        name="comment-o"
+        :badge="totalComment"
+      />
+      <van-icon
+        class="star"
+        :color="articleDetails.is_collected ? '#3296fa' : '#777'"
+        :name="articleDetails.is_collected ? 'star' : 'star-o'"
+        @click="onCollected"
+      />
+      <van-icon
+        class="good-job"
+        :color="articleDetails.attitude === 1 ? '#3296fa' : '#777'"
+        :name="articleDetails.attitude === 1 ? 'good-job' : 'good-job-o'"
+        @click="onLike"
+      />
+      <van-icon class="share" name="share" />
+    </div>
   </div>
 </template>
 
@@ -40,6 +42,10 @@ export default {
     },
     totalComment: {
       type: Number,
+      default: 0,
+    },
+    bottomShow: {
+      type: Boolean,
       required: true,
     },
   },

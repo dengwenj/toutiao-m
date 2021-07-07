@@ -11,7 +11,7 @@
       @load="onLoad"
     >
       <comment-item
-        v-for="(comment, index) in list"
+        v-for="(comment, index) in type === 'a' ? list : huifuComment"
         :key="index"
         :comment="comment"
       />
@@ -47,6 +47,7 @@ export default {
       finished: false,
       offset: null, // 页码  相当于前面的时间戳
       limit: 10, // 每页大小
+      huifuComment: [],
     }
   },
   computed: {},
@@ -59,6 +60,11 @@ export default {
     this.$bus.$on('newComment', (newComment) => {
       // 把新的文章评论添加在列表中
       this.list.unshift(newComment)
+    })
+
+    // 评论回复
+    this.$bus.$on('replyComment', (replyComment) => {
+      this.huifuComment.unshift(replyComment)
     })
   },
   methods: {
@@ -76,7 +82,8 @@ export default {
 
       // 2 把数据放到列表中
       const { results } = data.data
-      this.list.push(...results)
+
+      ;(this.type === 'a' ? this.list : this.huifuComment).push(...results)
 
       // 3 将本次的 loading 关闭
       this.loading = false
