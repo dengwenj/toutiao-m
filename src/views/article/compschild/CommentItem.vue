@@ -25,7 +25,7 @@
     </div>
     <div slot="label" class="label">
       <span class="pubdate">{{ comment.pubdate | formatComment }}</span>
-      <van-button class="btn" round size="mini"
+      <van-button class="btn" round size="mini" @click="reply(comment)"
         >{{ comment.reply_count }} 回复</van-button
       >
     </div>
@@ -73,6 +73,11 @@ export default {
       this.comment.is_liking = !this.comment.is_liking
 
       this.$toast.success(`${this.comment.is_liking ? '' : '取消'}点赞成功`)
+    },
+
+    reply(comment) {
+      // 事件总线
+      this.$bus.$emit('replyClick', comment)
     },
   },
 }

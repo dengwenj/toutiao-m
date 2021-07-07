@@ -43,6 +43,12 @@
       <release-comment :target="articleId" @releaseComment="releaseComment" />
     </van-popup>
     <!-- /发布评论 -->
+
+    <!-- 评论回复 -->
+    <van-popup v-model="isReplyShow" position="bottom">
+      <comment-reply />
+    </van-popup>
+    <!-- /评论回复 -->
   </div>
 </template>
 
@@ -52,6 +58,7 @@ import TextArticle from './compschild/TextArticle'
 import BottomArticle from './compschild/BottomArticle'
 import CommentList from './compschild/CommentList'
 import ReleaseComment from './compschild/ReleaseComment'
+import CommentReply from './compschild/CommentReply'
 
 // 网络请求
 import { getArticleById } from 'api/article'
@@ -67,6 +74,7 @@ export default {
     BottomArticle,
     CommentList,
     ReleaseComment,
+    CommentReply,
   },
   // 在组件中获取动态路由参数
   //     方式一：this.$route.params.articleId
@@ -83,6 +91,7 @@ export default {
       articleDetails: {}, // 文章详情
       isReleaseCommentshow: false, // 发布评论
       totalComment: 0, // 总评论
+      isReplyShow: false, // 回复评论
     }
   },
   computed: {},
@@ -91,7 +100,15 @@ export default {
     // 发送请求
     this._getArticleById()
   },
-  mounted() {},
+  mounted() {
+    // 时间总线  回复评论
+    this.$bus.$on('replyClick', (comment) => {
+      console.log(comment)
+
+      // 点击了回复评论就把回复评论弹出层展示出来
+      this.isReplyShow = true
+    })
+  },
   methods: {
     async _getArticleById() {
       const { data } = await getArticleById(this.articleId)
