@@ -81,7 +81,11 @@
       position="bottom"
       :style="{ height: '100%' }"
     >
-      <update-image :image="previewImage" />
+      <update-image
+        :file="previewImage"
+        @close="isImageShow = false"
+        @photo="user.photo = $event"
+      />
     </van-popup>
     <!-- /修改头像 -->
   </div>
@@ -133,8 +137,10 @@ export default {
       this.isImageShow = true
 
       //在弹出层里面预览图片
-      const bolb = window.URL.createObjectURL(this.$refs.file.files[0])
-      this.previewImage = bolb
+      // const bolb = window.URL.createObjectURL(this.$refs.file.files[0])
+      const file = this.$refs.file.files[0]
+      console.log(file)
+      this.previewImage = file
 
       // 为了解决相同文件不触发 change 事件，所以在这里手动的清空 file 的 value
       this.$refs.file.value = ''
