@@ -8,8 +8,9 @@
       @click-left="$router.back()"
     />
     <!-- /导航栏 -->
+    <input type="file" hidden ref="file" />
 
-    <van-cell title="头像" is-link center>
+    <van-cell title="头像" is-link center @click="$refs.file.click()">
       <van-image width="35" height="35" fit="cover" round :src="user.photo" />
     </van-cell>
     <van-cell title="昵称" is-link :value="user.name" @click="name = !name" />
