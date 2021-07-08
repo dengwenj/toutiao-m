@@ -5,7 +5,7 @@
         title="修改昵称"
         left-text="取消"
         right-text="完成"
-        @click-left="$emit('cross')"
+        @click-left="leftclick"
         @click-right="onUpdate"
       />
       <div class="field">
@@ -37,7 +37,7 @@ export default {
     // 声明接收父组件 v-model 传递的 value 数据
     value: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   data() {
@@ -86,6 +86,11 @@ export default {
           this.$toast.fail('昵称已存在')
         }
       }
+    },
+
+    leftclick() {
+      this.$emit('cross')
+      this.message = this.value
     },
   },
 }
