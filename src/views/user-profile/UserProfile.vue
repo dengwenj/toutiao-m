@@ -13,7 +13,12 @@
       <van-image width="35" height="35" fit="cover" round :src="user.photo" />
     </van-cell>
     <van-cell title="昵称" is-link :value="user.name" @click="name = !name" />
-    <van-cell title="性别" is-link :value="user.gender === 0 ? '男' : '女'" />
+    <van-cell
+      title="性别"
+      is-link
+      :value="user.gender === 0 ? '男' : '女'"
+      @click="isGender = !isGender"
+    />
     <van-cell title="生日" is-link :value="user.birthday" />
 
     <!-- 修改昵称 -->
@@ -38,6 +43,14 @@
      -->
     <update-name :name="name" @cross="name = !name" v-model="user.name" />
     <!-- /修改昵称 -->
+
+    <!-- 修改性别 -->
+    <update-gender
+      :isGender="isGender"
+      @cancel="isGender = $event"
+      v-model="user.gender"
+    />
+    <!-- /修改性别 -->
   </div>
 </template>
 
@@ -46,17 +59,20 @@
 import { userProfile } from 'api/user'
 
 import UpdateName from './compschild/UpdateName'
+import UpdateGender from './compschild/UpdateGender'
 
 export default {
   name: '',
   components: {
     UpdateName,
+    UpdateGender,
   },
   props: {},
   data() {
     return {
       user: {}, // 用户资料
       name: false, // 是否展示用户昵称
+      isGender: false, // 是否展示修改性别
     }
   },
   computed: {},
