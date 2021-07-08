@@ -77,11 +77,13 @@
 
     <!-- 修改头像 -->
     <van-popup
+      class="popup"
       v-model="isImageShow"
       position="bottom"
       :style="{ height: '100%' }"
     >
       <update-image
+        v-if="isImageShow"
         :file="previewImage"
         @close="isImageShow = false"
         @photo="user.photo = $event"
@@ -149,4 +151,8 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.popup {
+  background-color: #000;
+}
+</style>
