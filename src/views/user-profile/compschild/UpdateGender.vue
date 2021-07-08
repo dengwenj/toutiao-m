@@ -6,7 +6,7 @@
       @click-overlay="clickOverlay"
     >
       <van-picker
-        title="标题"
+        title="修改性别"
         show-toolbar
         :columns="columns"
         :default-index="genders"
@@ -65,7 +65,9 @@ export default {
         message: '保存中',
         forbidclick: true, // 禁止背景点击
       })
-      await updateUserProfile(this.genders)
+      await updateUserProfile({
+        gender: this.genders,
+      })
       this.$emit('input', this.genders)
       this.$emit('cancel', false)
       this.$toast.success('保存成功')
