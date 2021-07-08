@@ -8,7 +8,14 @@
       @click-left="$router.back()"
     />
     <!-- /导航栏 -->
-    <input type="file" hidden ref="file" />
+
+    <input
+      type="file"
+      hidden
+      ref="file"
+      accept="image/*"
+      @change="onFileChange"
+    />
 
     <van-cell title="头像" is-link center @click="$refs.file.click()">
       <van-image width="35" height="35" fit="cover" round :src="user.photo" />
@@ -67,6 +74,16 @@
       />
     </van-popup>
     <!-- /修改生日 -->
+
+    <!-- 修改头像 -->
+    <van-popup
+      v-model="isImageShow"
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+      <update-image :image="previewImage" />
+    </van-popup>
+    <!-- /修改头像 -->
   </div>
 </template>
 
@@ -77,6 +94,7 @@ import { userProfile } from 'api/user'
 import UpdateName from './compschild/UpdateName'
 import UpdateGender from './compschild/UpdateGender'
 import UpdateBirthday from './compschild/UpdateBirthday'
+import UpdateImage from './compschild/UpdateImage'
 
 export default {
   name: '',
@@ -84,6 +102,7 @@ export default {
     UpdateName,
     UpdateGender,
     UpdateBirthday,
+    UpdateImage,
   },
   props: {},
   data() {
@@ -92,6 +111,8 @@ export default {
       name: false, // 是否展示用户昵称
       isGender: false, // 是否展示修改性别
       isBirthdayShow: false,
+      isImageShow: false,
+      previewImage: null, // 上传预览图片
     }
   },
   computed: {},
@@ -105,6 +126,18 @@ export default {
     async _userProfile() {
       const { data } = await userProfile()
       this.user = data.data
+    },
+
+    onFileChange() {
+      // 展示图像弹出层
+      this.isImageShow = true
+
+      //在弹出层里面预览图片
+      const bolb = window.URL.createObjectURL(this.$refs.file.files[0])
+      this.previewImage = bolb
+
+      // 为了解决相同文件不触发 change 事件，所以在这里手动的清空 file 的 value
+      this.$refs.file.value = ''
     },
   },
 }
