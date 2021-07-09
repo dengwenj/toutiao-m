@@ -50,10 +50,29 @@
         <img
           class="mobileImg"
           src="./mobileImg.png"
-          @click="$router.push('/login')"
+          @click="
+            $router.push({
+              path: '/login',
+              query: {
+                redirect: '/my',
+              },
+            })
+          "
         />
       </div>
-      <div class="text" @click="$router.push('/login')">登录 / 注册</div>
+      <div
+        class="text"
+        @click="
+          $router.push({
+            path: '/login',
+            query: {
+              redirect: '/my',
+            },
+          })
+        "
+      >
+        登录 / 注册
+      </div>
     </div>
   </div>
 </template>

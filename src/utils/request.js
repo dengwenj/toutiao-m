@@ -32,6 +32,7 @@ const request = axios.create({
   }]
 })
 
+// 解决 token 过期哪里用的 防止 401 死循环
 const refreshTokenReq = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn/'
 })
@@ -103,7 +104,12 @@ request.interceptors.response.use(function(response) {
 })
 
 function redirectLogin() {
-  router.replace('/login')
+  router.replace({
+    path: '/login',
+    query: {
+      redirect: router.currentRoute.fullPath
+    }
+  })
 }
 
 // 导出
