@@ -12,7 +12,10 @@ const USER_KEY = 'toutiao-user'
 export default new Vuex.Store({
   state: {
     // user: JSON.parse(window.localStorage.getItem('user')) // 当前登录用户的登录状态（token等数据）
-    user: getItem(USER_KEY) // 封装了本地存储
+    user: getItem(USER_KEY), // 封装了本地存储
+
+    // 控制缓存
+    cachePage: ['Layout']
   },
   mutations: {
     setUser(state, data) {
@@ -21,6 +24,21 @@ export default new Vuex.Store({
       // 为了防止页面刷新数据丢失，还需要把数据放到本地存储中，这里仅仅是为了持久化数据
       // window.localStorage.setItem('user', JSON.stringify(data))
       setItem(USER_KEY, data) // 封装了本地存储
+    },
+
+    // 添加缓存页面
+    addCachePage(state, pageName) {
+      if (!state.cachePage.includes(pageName)) {
+        state.cachePage.push(pageName)
+      }
+    },
+
+    // 移除缓存页面
+    removeCachePage(state, pageName) {
+      const index = state.cachePage.indexOf(pageName)
+      if (index !== -1) {
+        state.cachePage.splice(index, 1)
+      }
     }
   },
   actions: {},

@@ -28,7 +28,10 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    // 添加缓存
+    this.$store.commit('addCachePage', 'Layout')
+  },
   methods: {},
 }
 </script>
