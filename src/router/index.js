@@ -86,6 +86,7 @@ const router = new VueRouter({
   mode: 'history'
 })
 
+// 路由拦截器
 // to 要去的那个路由
 // from 从哪里来的那个路由
 // next 放行
@@ -102,7 +103,6 @@ router.beforeEach((to, from, next) => {
         message: '该页面需要登录才能访问，确定登录吗?',
       })
       .then(() => {
-        console.log(1);
         // 点击确认  跳转到登录页
         router.replace({
           path: '/login',
