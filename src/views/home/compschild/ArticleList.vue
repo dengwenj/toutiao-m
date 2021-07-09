@@ -75,6 +75,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    // 解决缓存带来的滚动位置问题
     const articleScroll = this.$refs['article-list']
     articleScroll.addEventListener(
       'scroll',
