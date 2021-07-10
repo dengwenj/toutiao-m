@@ -53,18 +53,18 @@ export default {
   },
   created() {
     // 建立连接
-    const socket = io('http://ttapi.research.itcast.cn')
-    this.socket = socket
-    socket.on('connect', () => {
-      console.log('连接建立成功了')
-    })
-    socket.on('disconnect', () => {
-      console.log('断开连接了')
-    })
-    // 监听 message 事件，接收服务端消息
-    socket.on('message', (data) => {
-      this.message.push(data)
-    })
+    // const socket = io('http://ttapi.research.itcast.cn')
+    // this.socket = socket
+    // socket.on('connect', () => {
+    //   console.log('连接建立成功了')
+    // })
+    // socket.on('disconnect', () => {
+    //   console.log('断开连接了')
+    // })
+    // // 监听 message 事件，接收服务端消息
+    // socket.on('message', (data) => {
+    //   this.message.push(data)
+    // })
   },
   mounted() {
     this.scrollToBottom()
